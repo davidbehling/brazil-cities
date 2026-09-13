@@ -48,7 +48,7 @@ rails:
 	$(COMPOSE) exec backend rails $(cmd)
 
 bash:
-	$(COMPOSE) exec backend bash
+	$(COMPOSE) exec backend sh
 
 console:
 	$(COMPOSE) exec backend rails console
