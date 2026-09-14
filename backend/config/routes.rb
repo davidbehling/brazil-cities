@@ -8,8 +8,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v2 do
-      get '/search_cities', to: 'cities#new_search'
-      post '/search_cities', to: 'cities#search'
+      get "/search_cities", to: "cities#search"
     end
   end
 end

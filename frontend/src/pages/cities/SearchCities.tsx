@@ -1,117 +1,129 @@
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../../services/api";
+import type { City } from "../../types";
 
-interface SearchFormData {
-  name: string;
-  state_name: string;
-}
+type SearchType = "city" | "state";
 
 function SearchCities() {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState<SearchFormData>({
-    name: "",
-    state_name: "",
-  });
-
+  const [query, setQuery] = useState("");
+  const [searchType, setSearchType] = useState<SearchType>("city");
+  const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  function handleChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const { name, value } = event.target;
+  useEffect(() => {
+    const normalizedQuery = query.trim();
 
-    setFormData((current) => ({
-      ...current,
-      [name]: value,
-    }));
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    setLoading(true);
-    setError("");
-
-    try {
-      const response = await api.post(
-        "/api/v2/search_cities",
-        {
-          search_cities: formData,
-        }
-      );
-
-      navigate("/cities/search/results", {
-        state: {
-          cities: response,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      setError("Unable to search cities.");
-    } finally {
+    if (!normalizedQuery) {
+      setCities([]);
       setLoading(false);
+      return;
     }
-  }
+
+    const timeout = setTimeout(async () => {
+      setLoading(true);
+
+      try {
+        const params = new URLSearchParams({
+          q: normalizedQuery,
+          type: searchType,
+        });
+
+        const response = await api.get<City[]>(
+          `/api/v2/search_cities?${params.toString()}`
+        );
+
+        setCities(response);
+      } catch (error) {
+        console.error("Error searching cities:", error);
+        setCities([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [query, searchType]);
 
   return (
-    <div className="card w-25 mx-auto mt-5">
+    <div className="card w-50 mx-auto mt-5">
       <div className="card-header">
         <h1>Search Cities</h1>
       </div>
 
       <div className="card-body">
-        {error && (
-          <div className="alert alert-danger">
-            {error}
-          </div>
-        )}
+        <div
+          className="btn-group w-100 mb-3"
+          role="group"
+          aria-label="Search type"
+        >
+          <button
+            type="button"
+            className={`btn ${
+              searchType === "city"
+                ? "btn-primary"
+                : "btn-outline-primary"
+            }`}
+            onClick={() => setSearchType("city")}
+          >
+            City
+          </button>
 
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-
-          <input
-            id="name"
-            name="name"
-            type="text"
-            className="form-control"
-            value={formData.name}
-            onChange={handleChange}
-          />
-
-          <label htmlFor="state_name" className="mt-2">
+          <button
+            type="button"
+            className={`btn ${
+              searchType === "state"
+                ? "btn-primary"
+                : "btn-outline-primary"
+            }`}
+            onClick={() => setSearchType("state")}
+          >
             State
-          </label>
+          </button>
+        </div>
 
-          <input
-            id="state_name"
-            name="state_name"
-            type="text"
-            className="form-control"
-            value={formData.state_name}
-            onChange={handleChange}
-          />
+        <input
+          type="text"
+          className="form-control"
+          placeholder={
+            searchType === "city"
+              ? "Search city..."
+              : "Search state..."
+          }
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          autoFocus
+        />
 
-          <div className="d-flex justify-content-around mt-4">
-            <button
-              type="button"
-              className="btn btn-secondary mt-2"
-              onClick={() => navigate("/cities")}
-            >
-              Back
-            </button>
+        <div className="mt-4">
+          {loading && <p>Searching...</p>}
 
-            <button
-              type="submit"
-              className="btn btn-primary mt-2"
-              disabled={loading}
-            >
-              {loading ? "Searching..." : "Search"}
-            </button>
-          </div>
-        </form>
+          {!loading &&
+            query.trim() &&
+            cities.length === 0 && (
+              <p>No records found.</p>
+            )}
+
+          {!loading && cities.length > 0 && (
+            <div>
+              {cities.map((city) => (
+                <p key={city.id}>
+                  {city.name} -{" "}
+                  {city.population.toLocaleString("pt-BR")}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="card-footer d-flex justify-content-end">
+        <Link
+          to="/cities"
+          className="btn btn-secondary"
+        >
+          Back
+        </Link>
       </div>
     </div>
   );

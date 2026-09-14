@@ -7,28 +7,26 @@ module Cities
     end
 
     def initialize(params)
-      @name = params[:name]
-      @state_name = params[:state_name]
+      @query = params[:q].to_s.strip
+      @type = params[:type].to_s
     end
 
     def call
-      cities_by_name & cities_by_state_name
+      return City.none if @query.blank? || type.blank?
+      return cities_by_name if type == "city"
+      cities_by_state_name if type == "state"
     end
 
     private
 
-    attr_reader :name, :state_name
+    attr_reader :query, :type
 
     def cities_by_name
-      return City.all if name.blank?
-
-      City.search_by_name(name)
+      City.search_by_name(@query).order(:name)
     end
 
     def cities_by_state_name
-      return City.all if state_name.blank?
-
-      City.search_by_state_name(state_name)
+      City.search_by_state_name(@query).order(:name)
     end
   end
 end

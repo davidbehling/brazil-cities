@@ -13,7 +13,6 @@ import CityEdit from "./pages/cities/CityEdit";
 import CityShow from "./pages/cities/CityShow";
 
 import SearchCities from "./pages/cities/SearchCities";
-import SearchCitiesResults from "./pages/cities/SearchCitiesResults";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css'
@@ -37,11 +36,6 @@ function App() {
         <Route
           path="/cities/search"
           element={<SearchCities />}
-        />
-
-        <Route
-          path="/cities/search/results"
-          element={<SearchCitiesResults />}
         />
 
         <Route
