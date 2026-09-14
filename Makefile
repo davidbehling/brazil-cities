@@ -56,6 +56,14 @@ console:
 routes:
 	$(COMPOSE) exec backend rails routes
 
+
+#------
+# REACT
+#------
+
+front-bash:
+	$(COMPOSE) exec frontend sh
+
 #---------------
 # Banco de dados
 #---------------
