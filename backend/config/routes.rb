@@ -6,5 +6,10 @@ Rails.application.routes.draw do
       resources :states, only: [:index, :show, :create, :update, :destroy]
       resources :cities, only: [:index, :show, :create, :update, :destroy]
     end
+
+    namespace :v2 do
+      get '/search_cities', to: 'cities#new_search'
+      post '/search_cities', to: 'cities#search'
+    end
   end
 end

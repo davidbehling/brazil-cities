@@ -57,6 +57,15 @@ routes:
 	$(COMPOSE) exec backend rails routes
 
 
+debug:
+ifeq (,)
+	echo "Para container padrão backend"
+	sudo docker attach brazil-cities-backend-1
+else
+	echo "Para container customizado"
+	sudo docker attach
+endif
+
 #------
 # REACT
 #------
