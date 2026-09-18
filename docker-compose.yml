@@ -3,11 +3,12 @@ services:
     image: postgres:14
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: embarca_development
-      DATABASE_NAME: brazil_cities
+      POSTGRES_DB: brazil_cities
 
   backend:
     build:
@@ -20,10 +21,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_HOST: db
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_NAME: brazil_cities
+      RAILS_ENV: development
     depends_on:
       - db
 

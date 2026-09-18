@@ -92,6 +92,12 @@ db-reset:
 db-seed:
 	$(COMPOSE) exec backend rails db:seed
 
+db-setup:
+	docker compose exec backend bin/rails db:create db:migrate db:seed
+
+db-setup-test:
+	docker compose exec backend bin/RAILS_ENV=test rails db:create db:migrate db:seed
+
 #-------
 # Testes
 #--------
@@ -114,3 +120,11 @@ clean:
 
 clean-volumes:
 	$(COMPOSE) down -v --remove-orphans
+
+
+#-------------------------------
+# Desabilitar apache da porta 80
+#-------------------------------
+
+apache:
+	sudo systemctl stop apache2
