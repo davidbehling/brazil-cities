@@ -93,23 +93,17 @@ db-seed:
 	$(COMPOSE) exec backend rails db:seed
 
 db-setup:
-	docker compose exec backend bin/rails db:create db:migrate db:seed
+	$(COMPOSE) exec backend rails db:create db:migrate db:seed
 
 db-setup-test:
-	docker compose exec backend bin/RAILS_ENV=test rails db:create db:migrate db:seed
+	$(COMPOSE) exec -e RAILS_ENV=test backend rails db:drop db:create db:migrate db:seed
 
 #-------
 # Testes
 #--------
 
 test:
-	$(COMPOSE) exec backend bundle exec rspec
-
-test-models:
-	$(COMPOSE) exec backend bundle exec rspec spec/models
-
-test-requests:
-	$(COMPOSE) exec backend bundle exec rspec spec/requests
+	$(COMPOSE) exec -e RAILS_ENV=test backend rails test -v test/
 
 #--------
 # LIMPEZA
