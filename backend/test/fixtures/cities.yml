@@ -1,11 +1,23 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Joinville
   population: 1
   state: one
 
 two:
-  name: MyString
+  name: Curitiba
   population: 1
   state: two
+
+1:
+  id:  1
+  name: Joinville
+  population: 1
+  state: 1
+
+2:
+  id: 2
+  name: Curitiba
+  population: 1
+  state: 2

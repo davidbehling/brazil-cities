@@ -1,9 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Santa Catarina
   population: 1
 
 two:
-  name: MyString
+  name: Parana
+  population: 1
+  
+1:
+  id: 1
+  name: Santa Catarina
+  population: 1
+
+2:
+  id: 2
+  name: Parana
   population: 1
