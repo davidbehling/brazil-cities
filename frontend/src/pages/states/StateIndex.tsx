@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 import type { State } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function StateIndex() {
   const [states, setStates] = useState<State[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +30,7 @@ function StateIndex() {
 
   async function handleDelete(id: number) {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this state?"
+      t.alert_delete_state
     );
 
     if (!confirmed) {
@@ -51,11 +55,11 @@ function StateIndex() {
   return (
     <div className="card w-50 mx-auto mt-5">
       <div className="card-header">
-        <h1>States</h1>
+        <h1>{t.states}</h1>
 
         <div className="d-flex justify-content-end">
           <Link to="/states/new" className="btn btn-primary">
-            New State
+            {t.new_state}
           </Link>
         </div>
       </div>
@@ -70,9 +74,9 @@ function StateIndex() {
         <table className="table table-striped table-hover">
           <thead className="thead-dark">
             <tr>
-              <th>Name</th>
-              <th>Population</th>
-              <th colSpan={3}>Actions</th>
+              <th>{t.name}</th>
+              <th>{t.population}</th>
+              <th colSpan={3}>{t.action}</th>
             </tr>
           </thead>
 
@@ -90,7 +94,7 @@ function StateIndex() {
                     to={`/states/${state.id}`}
                     className="btn btn-secondary"
                   >
-                    Show
+                    {t.show}
                   </Link>
                 </td>
 
@@ -99,7 +103,7 @@ function StateIndex() {
                     to={`/states/${state.id}/edit`}
                     className="btn btn-secondary"
                   >
-                    Edit
+                    {t.edit}
                   </Link>
                 </td>
 
@@ -109,7 +113,7 @@ function StateIndex() {
                     onClick={() => handleDelete(state.id)}
                     className="btn btn-danger"
                   >
-                    Destroy
+                    {t.delete}
                   </button>
                 </td>
               </tr>

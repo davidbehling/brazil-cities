@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 import type { City, State } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function CityIndex() {
   const [cities, setCities] = useState<City[]>([]);
   const [states, setStates] = useState<State[]>([]);
@@ -36,7 +40,7 @@ function CityIndex() {
 
   async function handleDelete(id: number) {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this city?"
+      t.alert_delete_city
     );
 
     if (!confirmed) {
@@ -59,20 +63,20 @@ function CityIndex() {
   }
 
   return (
-    <div className="card w-50 mx-auto mt-5">
+    <div className="card mx-auto mt-5">
       <div className="card-header">
-        <h1>Cities</h1>
+        <h1>{t.cities}</h1>
 
         <div className="d-flex justify-content-end">
           <Link
             to="/cities/search"
             className="btn btn-secondary me-3"
           >
-            Search Cities
+            {`${t.search} ${t.city}`}
           </Link>
 
           <Link to="/cities/new" className="btn btn-primary">
-            New City
+            {t.new_city}
           </Link>
         </div>
       </div>
@@ -87,10 +91,10 @@ function CityIndex() {
         <table className="table table-striped table-hover">
           <thead className="thead-dark">
             <tr>
-              <th>Name</th>
-              <th>Population</th>
-              <th>State</th>
-              <th colSpan={3}>Actions</th>
+              <th>{t.name}</th>
+              <th>{t.population}</th>
+              <th>{t.state}</th>
+              <th colSpan={3}>{t.action}</th>
             </tr>
           </thead>
 
@@ -110,7 +114,7 @@ function CityIndex() {
                     to={`/cities/${city.id}`}
                     className="btn btn-secondary"
                   >
-                    Show
+                    {t.show}
                   </Link>
                 </td>
 
@@ -119,7 +123,7 @@ function CityIndex() {
                     to={`/cities/${city.id}/edit`}
                     className="btn btn-secondary"
                   >
-                    Edit
+                    {t.edit}
                   </Link>
                 </td>
 
@@ -129,7 +133,7 @@ function CityIndex() {
                     onClick={() => handleDelete(city.id)}
                     className="btn btn-danger"
                   >
-                    Destroy
+                    {t.delete}
                   </button>
                 </td>
               </tr>

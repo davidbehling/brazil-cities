@@ -5,9 +5,14 @@ import StateForm from "../../components/StateForm";
 import api from "../../services/api";
 import type { State } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function StateEdit() {
   const { id } = useParams();
   const [state, setState] = useState<State | null>(null);
+  const t_edit =`${t.edit} ${t.state}`;
 
   useEffect(() => {
     loadState();
@@ -26,7 +31,7 @@ function StateEdit() {
     return <div className="container mt-5">Loading...</div>;
   }
 
-  return <StateForm state={state} title="Editing State" />;
+  return <StateForm state={state} title={t_edit} />;
 }
 
 export default StateEdit;

@@ -4,6 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import api from "../../services/api";
 import type { City, State } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function CityShow() {
   const { id } = useParams();
 
@@ -50,29 +54,29 @@ function CityShow() {
     <div className="card w-25 mx-auto mt-5">
       <div className="card-body">
         <p>
-          <strong>Name:</strong> {city.name}
+          <strong>{t.name}:</strong> {city.name}
         </p>
 
         <p>
-          <strong>Population:</strong>{" "}
+          <strong>{t.population}:</strong>{" "}
           {city.population.toLocaleString("pt-BR")}
         </p>
 
         <p>
-          <strong>State:</strong> {state.name}
+          <strong>{t.state}:</strong> {state.name}
         </p>
       </div>
 
       <div className="card-footer d-flex justify-content-end">
         <Link to="/cities" className="btn btn-secondary me-3">
-          Back
+          {t.back}
         </Link>
 
         <Link
           to={`/cities/${city.id}/edit`}
           className="btn btn-warning"
         >
-          Edit
+          {t.edit}
         </Link>
       </div>
     </div>

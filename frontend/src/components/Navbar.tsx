@@ -1,4 +1,7 @@
 import { NavLink } from "react-router-dom";
+import translations from "../i18n";
+
+const t = translations;
 
 function Navbar() {
   return (
@@ -28,19 +31,19 @@ function Navbar() {
           <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink className="nav-link" to="/cities">
-                Cities
+                {t.cities}
               </NavLink>
             </li>
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/cities/search">
-                Search Cities
+                {`${t.search} ${t.cities}`}
               </NavLink>
             </li>
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/states">
-                States
+                {t.states}
               </NavLink>
             </li>
           </ul>

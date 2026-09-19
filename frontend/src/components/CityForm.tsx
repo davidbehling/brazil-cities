@@ -4,6 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { City, CityFormData, State } from "../types";
 
+import translations from "../i18n";
+
+const t = translations;
+
 interface CityFormProps {
   city?: City;
   title: string;
@@ -104,7 +108,7 @@ function CityForm({ city, title }: CityFormProps) {
 
         <form onSubmit={handleSubmit}>
           <div className="field mb-3">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">{t.name}</label>
 
             <input
               id="name"
@@ -117,7 +121,7 @@ function CityForm({ city, title }: CityFormProps) {
           </div>
 
           <div className="field mb-3">
-            <label htmlFor="population">Population</label>
+            <label htmlFor="population">{t.population}</label>
 
             <input
               id="population"
@@ -130,7 +134,7 @@ function CityForm({ city, title }: CityFormProps) {
           </div>
 
           <div className="field">
-            <label htmlFor="state_id">State</label>
+            <label htmlFor="state_id">{t.state}</label>
 
             <select
               id="state_id"
@@ -140,7 +144,7 @@ function CityForm({ city, title }: CityFormProps) {
               className="form-control"
               disabled={loadingStates}
             >
-              <option value={0}>Select a state</option>
+              <option value={0}>{t.state_select}</option>
 
               {states.map((state) => (
                 <option key={state.id} value={state.id}>
@@ -156,7 +160,7 @@ function CityForm({ city, title }: CityFormProps) {
               className="btn btn-success"
               disabled={saving || loadingStates}
             >
-              {saving ? "Saving..." : "Save"}
+              {saving ? t.saving : t.save}
             </button>
           </div>
         </form>
@@ -164,7 +168,7 @@ function CityForm({ city, title }: CityFormProps) {
 
       <div className="card-footer d-flex justify-content-start">
         <Link to="/cities" className="btn btn-secondary">
-          Back
+          {t.back}
         </Link>
       </div>
     </div>

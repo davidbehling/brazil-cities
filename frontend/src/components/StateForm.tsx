@@ -4,6 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { State, StateFormData } from "../types";
 
+import translations from "../i18n";
+
+const t = translations;
+
 interface StateFormProps {
   state?: State;
   title: string;
@@ -79,7 +83,7 @@ function StateForm({ state, title }: StateFormProps) {
 
         <form onSubmit={handleSubmit}>
           <div className="field mb-3">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">{t.name}</label>
 
             <input
               id="name"
@@ -92,7 +96,7 @@ function StateForm({ state, title }: StateFormProps) {
           </div>
 
           <div className="field">
-            <label htmlFor="population">Population</label>
+            <label htmlFor="population">{t.population}</label>
 
             <input
               id="population"
@@ -110,7 +114,7 @@ function StateForm({ state, title }: StateFormProps) {
               className="btn btn-success"
               disabled={saving}
             >
-              {saving ? "Saving..." : "Save"}
+              {saving ? t.saving : t.save}
             </button>
           </div>
         </form>
@@ -118,7 +122,7 @@ function StateForm({ state, title }: StateFormProps) {
 
       <div className="card-footer d-flex justify-content-start">
         <Link to="/states" className="btn btn-secondary">
-          Back
+          {t.back}
         </Link>
       </div>
     </div>

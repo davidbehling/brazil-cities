@@ -5,11 +5,16 @@ import CityForm from "../../components/CityForm";
 import api from "../../services/api";
 import type { City } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function CityEdit() {
   const { id } = useParams();
 
   const [city, setCity] = useState<City | null>(null);
   const [error, setError] = useState("");
+  const t_edit =`${t.edit} ${t.city}`;
 
   useEffect(() => {
     loadCity();
@@ -41,7 +46,7 @@ function CityEdit() {
     return <div className="container mt-5">Loading...</div>;
   }
 
-  return <CityForm city={city} title="Editing City" />;
+  return <CityForm city={city} title={t_edit} />;
 }
 
 export default CityEdit;

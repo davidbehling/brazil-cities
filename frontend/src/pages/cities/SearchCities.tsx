@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 import type { City } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 type SearchType = "city" | "state";
 
 function SearchCities() {
@@ -48,7 +52,7 @@ function SearchCities() {
   return (
     <div className="card w-50 mx-auto mt-5">
       <div className="card-header">
-        <h1>Search Cities</h1>
+        <h1>{`${t.search} ${t.cities}`}</h1>
       </div>
 
       <div className="card-body">
@@ -66,7 +70,7 @@ function SearchCities() {
             }`}
             onClick={() => setSearchType("city")}
           >
-            City
+            {t.city}
           </button>
 
           <button
@@ -78,7 +82,7 @@ function SearchCities() {
             }`}
             onClick={() => setSearchType("state")}
           >
-            State
+            {t.state}
           </button>
         </div>
 
@@ -87,8 +91,8 @@ function SearchCities() {
           className="form-control"
           placeholder={
             searchType === "city"
-              ? "Search city..."
-              : "Search state..."
+              ? `${t.search} ${t.city}...`
+              : t.search_state
           }
           value={query}
           onChange={(event) => setQuery(event.target.value)}
@@ -101,15 +105,14 @@ function SearchCities() {
           {!loading &&
             query.trim() &&
             cities.length === 0 && (
-              <p>No records found.</p>
+              <p>{t.noResults}</p>
             )}
 
           {!loading && cities.length > 0 && (
             <div>
               {cities.map((city) => (
                 <p key={city.id}>
-                  {city.name} -{" "}
-                  {city.population.toLocaleString("pt-BR")}
+                  {`${city.name}, ${t.population}: ${city.population.toLocaleString("pt-BR")}`}
                 </p>
               ))}
             </div>
@@ -122,7 +125,7 @@ function SearchCities() {
           to="/cities"
           className="btn btn-secondary"
         >
-          Back
+          {t.back}
         </Link>
       </div>
     </div>

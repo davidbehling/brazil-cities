@@ -4,6 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import api from "../../services/api";
 import type { State } from "../../types";
 
+import translations from "../../i18n";
+
+const t = translations;
+
 function StateShow() {
   const { id } = useParams();
   const [state, setState] = useState<State | null>(null);
@@ -29,25 +33,25 @@ function StateShow() {
     <div className="card w-25 mx-auto mt-5">
       <div className="card-body">
         <p>
-          <strong>Name:</strong> {state.name}
+          <strong>{t.name}:</strong> {state.name}
         </p>
 
         <p>
-          <strong>Population:</strong>{" "}
+          <strong>{t.population}:</strong>{" "}
           {state.population.toLocaleString("pt-BR")}
         </p>
       </div>
 
       <div className="card-footer d-flex justify-content-end">
         <Link to="/states" className="btn btn-secondary me-3">
-          Back
+          {t.back}
         </Link>
 
         <Link
           to={`/states/${state.id}/edit`}
           className="btn btn-warning"
         >
-          Edit
+          {t.edit}
         </Link>
       </div>
     </div>
