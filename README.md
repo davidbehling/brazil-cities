@@ -131,3 +131,5 @@ sudo docker exec -it $(docker compose ps -q backend) RAILS_ENV=test bin/rails te
 ## Demonstração
 
 <video src="./frontend/public/embarca_test.mp4" controls width="800"></video>
+
+https://github.com/user-attachments/assets/81ac115f-4696-46c4-97e9-0435a6143ff4
